@@ -89,6 +89,16 @@
 - (void)objectLoaderDidLoadUnexpectedResponse:(RKObjectLoader*)objectLoader;
 
 /**
+ Sent before body is examined for content (e.g. if is not an empty response. The method should return NSString* that
+ contains the name of appropriate body decoder (if necessary to decode custom protocols that contain NSString data, but
+ futher processing is needed. If not implemented or returns null no decoding will be performed (assuming it is already 
+ suitable for further processing.
+ 
+ @optional
+*/
+- (void)objectLoader:(RKObjectLoader*)loader willParseData:(inout id *)bodyData;
+
+/**
  Invoked just after parsing has completed, but before object mapping begins. This can be helpful
  to extract data from the parsed payload that is not object mapped, but is interesting for one
  reason or another. The mappableData will be made mutable via mutableCopy before the delegate

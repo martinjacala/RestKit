@@ -160,6 +160,14 @@
     // with the appropriate MIME Type with no content (such as for a successful PUT or DELETE). Make sure we don't generate an error
     // in these cases
     id bodyAsString = [self.response bodyAsString];
+    
+    if ([self.delegate respondsToSelector:@selector(objectLoader:willParseData:)]) {
+        id responseData = [[self.response.body mutableCopy] autorelease];
+        [(NSObject<RKObjectLoaderDelegate>*)self.delegate objectLoader:self willParseData:&responseData];
+        bodyAsString = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
+    }
+
+    
     if (bodyAsString == nil || [[bodyAsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0) {
         RKLogDebug(@"Mapping attempted on empty response body...");
         if (self.targetObject) {
