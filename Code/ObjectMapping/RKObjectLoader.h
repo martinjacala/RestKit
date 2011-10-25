@@ -89,10 +89,11 @@
 - (void)objectLoaderDidLoadUnexpectedResponse:(RKObjectLoader*)objectLoader;
 
 /**
- Sent before body is examined for content (e.g. if is not an empty response. The method should return NSString* that
- contains the name of appropriate body decoder (if necessary to decode custom protocols that contain NSString data, but
- futher processing is needed. If not implemented or returns null no decoding will be performed (assuming it is already 
- suitable for further processing.
+ Invoked before parsing of the response has been started. This might be helpful when the payload is not plain string 
+ e.g. if custom data encoding is used during the transport. 
+ 
+ Note that the body data is a pointer to a pointer to allow you to replace the mappable data
+ with a new object to be mapped. You must dereference it to access the value.
  
  @optional
 */
