@@ -92,8 +92,8 @@
  Invoked before parsing of the response has been started. This might be helpful when the payload is not plain string 
  e.g. if custom data encoding is used during the transport. 
  
- Note that the body data is a pointer to a pointer to allow you to replace the mappable data
- with a new object to be mapped. You must dereference it to access the value.
+ Note that the body data is a pointer to a pointer to allow you to replace the payload data
+ with a new object to be parsed. You must dereference it to access the value.
  
  @optional
 */
